@@ -15,10 +15,11 @@
 <body>
 	<nav class="navbar navbar-default navbar-static-top">
 		<div class="container">
-			<p class="navbar-text navbar-left">Home</p>
+			<p class="navbar-text navbar-left">Taskboard</p>
 			<ul class="nav navbar-nav navbar-left">
 				<li class="active"><a href="company">Company</a></li>
 				<li><a href="profile">Profile</a></li>
+                <li><a href="review">Review</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="logout">Log out</a></li>

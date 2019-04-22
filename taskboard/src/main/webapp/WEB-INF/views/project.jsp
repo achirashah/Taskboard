@@ -19,8 +19,9 @@
                 Taskboard
             </p>
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="company">Company</a></li>
                 <li><a href="profile">Profile</a></li>
+                <li><a href="company">Company</a></li>
+                <li><a href="reviewForm">Review</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="logout">Log out</a></li>

@@ -21,6 +21,7 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="company">Company</a></li>
                 <li class="active"><a href="profile">Profile</a></li>
+                <li><a href="review">Review</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="logout">Log out</a></li>
