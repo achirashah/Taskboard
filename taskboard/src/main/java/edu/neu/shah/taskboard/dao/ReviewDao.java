@@ -46,13 +46,13 @@ public class ReviewDao {
 	}
 
 	public int getAllTasksCount(ReviewModel reviewModel) {
-		int count = entityManager.createQuery(
+		long count = entityManager.createQuery(
 				"SELECT  COUNT(t) from Task t WHERE t.user IN :users AND t.project IN :projects AND t.state IN :taskStates",
-				Integer.class).setParameter("users", reviewModel.getUsers())
+				Long.class).setParameter("users", reviewModel.getUsers())
 				.setParameter("projects", reviewModel.getProjects())
 				.setParameter("taskStates", reviewModel.getTaskStates()).getSingleResult();
 		LOGGER.info("total results = {}", count);
-		return count;
+		return (int) count;
 	}
 
 	public List<Task> getAllTasksPaginated(ReviewModel reviewModel, int firstResult) {

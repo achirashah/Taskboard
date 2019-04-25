@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -60,17 +59,19 @@ public class ReviewFormController {
 		request.setAttribute("tasks", null);
 
 		// model.addAttribute("reviewModel", this.fetchReviewModel(user));
+		ReviewModel reviewModel = this.fetchReviewModel(user);
 		request.setAttribute("reviewModel", this.fetchReviewModel(user));
+		request.getSession().setAttribute("reviewModel", reviewModel);
 
 		return "review";
 	}
 
 	@RequestMapping(value = "/review", method = RequestMethod.POST)
-	public String processReviewRequest(HttpServletRequest request,
-			@ModelAttribute("reviewModel") ReviewModel reviewModel) {
+	public String processReviewRequest(HttpServletRequest request) {
+		ReviewModel reviewModel = (ReviewModel) request.getSession().getAttribute("reviewModel");
 
 		LOGGER.info("inside review POST!!!");
-
+		LOGGER.info("selected projects -> {}", reviewModel.getProjects());
 		User user = (User) request.getSession().getAttribute("user");
 		if ("DEV".equalsIgnoreCase(user.getRole())) {
 			List<User> defaultUserList = new ArrayList<User>();
@@ -83,7 +84,6 @@ public class ReviewFormController {
 		reviewModel.setPageCount(pageCount);
 		List<Task> fetchedTasks = reviewDao.getAllTasksPaginated(reviewModel, 0);
 
-		request.getSession().setAttribute("reviewModel", reviewModel);
 		request.setAttribute("currentPage", 1);
 		request.setAttribute("pageCount", pageCount);
 		request.setAttribute("tasks", fetchedTasks);
@@ -92,14 +92,14 @@ public class ReviewFormController {
 	}
 
 	@GetMapping("/reviewresults")
-	public String loadResults(HttpServletRequest request, Model model) {
+	public String loadResults(HttpServletRequest request) {
 		ReviewModel reviewModel = (ReviewModel) request.getSession().getAttribute("reviewModel");
 		if (reviewModel == null) {
 			LOGGER.error("something is up!!!");
 			return "error";
 		}
 
-		int requestedPage = (int) request.getAttribute("currentPage");
+		int requestedPage = Integer.parseInt(request.getParameter("currentPage")) - 1;
 
 		int firstResult = requestedPage * pageSize;
 

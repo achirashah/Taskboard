@@ -54,13 +54,11 @@
 				</tr>
 			</c:forEach>
 		</table>
-	</div>
-
 	<nav aria-label="taskListing">
 		<ul class="pagination">
 			<c:if test="${currentPage != 1}">
 				<li class="page-item"><a class="page-link"
-					href="review?currentPage=${currentPage-1}">Previous</a>
+					href="reviewresults?currentPage=${currentPage-1}">Previous</a>
 				</li>
 			</c:if>
 
@@ -71,7 +69,7 @@
 					</c:when>
 					<c:otherwise>
 						<li class="page-item"><a class="page-link"
-							href="review?currentPage=${i}">${i}</a>
+							href="reviewresults?currentPage=${i}">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -79,11 +77,14 @@
 
 			<c:if test="${currentPage lt pageCount}">
 				<li class="page-item"><a class="page-link"
-					href="review?currentPage=${currentPage+1}">Next</a>
+					href="reviewresults?currentPage=${currentPage+1}">Next</a>
 				</li>
 			</c:if>
+			<li><a class="page-item" href="pdfview">Print / PDF View</a></li>
 		</ul>
-	</nav>
+	</nav>	
+	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script
