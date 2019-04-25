@@ -19,7 +19,7 @@ public class Task {
 	private Integer id;
 
 	@Column(nullable = false, length = 45)
-	private String category;
+	private String state;
 
 	@Column(nullable = false, length = 45)
 	private String content;
@@ -29,8 +29,8 @@ public class Task {
 	private Project project;
 
 	@ManyToOne
-	@JoinColumn(name = "employees_id")
-	private Employee employee;
+	@JoinColumn(name = "users_id")
+	private User user;
 
 	public Integer getId() {
 		return id;
@@ -40,12 +40,12 @@ public class Task {
 		this.id = id;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getState() {
+		return state;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getContent() {
@@ -64,12 +64,12 @@ public class Task {
 		this.project = project;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public User getUser() {
+		return user;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
@@ -77,14 +77,14 @@ public class Task {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Task [id=");
 		builder.append(id);
-		builder.append(", category=");
-		builder.append(category);
+		builder.append(", state=");
+		builder.append(state);
 		builder.append(", content=");
 		builder.append(content);
 		builder.append(", project=");
 		builder.append(project);
-		builder.append(", employee=");
-		builder.append(employee);
+		builder.append(", user=");
+		builder.append(user);
 		builder.append("]");
 		return builder.toString();
 	}

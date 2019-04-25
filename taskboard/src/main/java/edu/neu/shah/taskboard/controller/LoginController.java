@@ -5,20 +5,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.neu.shah.taskboard.dao.EmployeeDao;
-import edu.neu.shah.taskboard.pojo.Employee;
+import edu.neu.shah.taskboard.dao.UserDao;
+import edu.neu.shah.taskboard.pojo.User;
 
 @Controller
 public class LoginController {
 	@Autowired
-	EmployeeDao employeeDao;
+	UserDao userDao;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@Value("${user.session.max.inactive:1800}")
+	int maxInactiveInterval;
+
+	@GetMapping("/login")
 	public String login(Model model) {
 		return "login";
 	}
@@ -28,12 +33,13 @@ public class LoginController {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		System.out.println("email+password===\"" + email + "\"+\"" + password + "\"");
-		password = employeeDao.encodePassword(password);
+		password = userDao.encodePassword(password);
 		System.out.println("encoded --> email+password===\"" + email + "\"+\"" + password + "\"");
 		try {
-			Employee employee = employeeDao.getEmployeeByEmailAndPassword(email, password);
+			User user = userDao.getUserByEmailAndPassword(email, password);
 			HttpSession session = request.getSession();
-			session.setAttribute("employee", employee);
+			session.setAttribute("user", user);
+			session.setMaxInactiveInterval(maxInactiveInterval);
 			return "redirect:profile";
 		} catch (NoResultException e) {
 			request.setAttribute("infoLogin", "Data in login form was invalid, RETRY.");

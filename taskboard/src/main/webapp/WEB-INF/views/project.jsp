@@ -13,21 +13,20 @@
     <script src="../../js/backToTheSamePlace.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <p class="navbar-text navbar-left">
-                Taskboard
-            </p>
-            <ul class="nav navbar-nav navbar-left">
-                <li><a href="profile">Profile</a></li>
-                <li><a href="company">Company</a></li>
-                <li><a href="reviewForm">Review</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="logout">Log out</a></li>
-            </ul>
-        </div>
-    </nav>
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<p class="navbar-text navbar-left">Taskboard</p>
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="company">Company</a></li>
+				<li><a href="profile">Profile</a></li>
+				<li><a href="review">Review</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>${sessionScope.user.firstName} ${sessionScope.user.lastName}</a></li> 
+				<li><a href="logout">Log out</a></li>
+			</ul>
+		</div>
+	</nav>
     <main>
         <article class="container">
             <header class="row">
@@ -73,8 +72,8 @@
                     </c:if>
                     <c:forEach items="${todoTasks}" var="task">
                         <div class="media yellow-note neat">
-                            <img src="../../img/${task.getEmployee().getAvatar()}" alt="Avatar">
-                            <h4>${task.getEmployee().getName()}</h4>
+                            <img src="../../img/${task.getUser().getIcon()}" alt="Icon">
+                            <h4>${task.getUser().getFirstName()}</h4>
                             <p><strong>${task.getContent()}</strong></p>
                         </div>
                     </c:forEach>
@@ -88,8 +87,8 @@
                     </c:if>
                     <c:forEach items="${doingTasks}" var="task">
                         <div class="media green-note neat">
-                            <img src="../../img/${task.getEmployee().getAvatar()}" alt="Avatar">
-                            <h4>${task.getEmployee().getName()}</h4>
+                            <img src="../../img/${task.getUser().getIcon()}" alt="Icon">
+                            <h4>${task.getUser().getFirstName()}</h4>
                             <p><strong>${task.getContent()}</strong></p>
                         </div>
                     </c:forEach>
@@ -103,8 +102,8 @@
                     </c:if>
                     <c:forEach items="${doneTasks}" var="task">
                         <div class="media blue-note neat">
-                            <img src="../../img/${task.getEmployee().getAvatar()}" alt="Avatar">
-                            <h4>${task.getEmployee().getName()}</h4>
+                            <img src="../../img/${task.getUser().getIcon()}" alt="Icon">
+                            <h4>${task.getUser().getFirstName()}</h4>
                             <p><strong>${task.getContent()}</strong></p>
                         </div>
                     </c:forEach>

@@ -13,29 +13,29 @@
     <script src="../../js/backToTheSamePlace.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <p class="navbar-text navbar-left">
-                Taskboard
-            </p>
-            <ul class="nav navbar-nav navbar-left">
-                <li><a href="company">Company</a></li>
-                <li class="active"><a href="profile">Profile</a></li>
-                <li><a href="review">Review</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="logout">Log out</a></li>
-            </ul>
-        </div>
-    </nav>
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<p class="navbar-text navbar-left">Taskboard</p>
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="company">Company</a></li>
+				<li class="active"><a href="profile">Profile</a></li>
+				<li><a href="review">Review</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>${sessionScope.user.firstName}
+						${sessionScope.user.lastName}</a></li>
+				<li><a href="logout">Log out</a></li>
+			</ul>
+		</div>
+	</nav>
     <main>
         <article class="container">
             <header class="row">
                 <header class="col-xs-12 col-md-3">
                     <figure>
-                        <img src="../../img/${employee.getAvatar()}" alt="Avatar">
+                        <img src="../../img/${user.getIcon()}" alt="Icon">
                         <figcaption>
-                            <h3>${employee.getName()} ${employee.getSurname()}</h3>
+                            <h3>${user.getFirstName()} ${user.getLastName()}</h3>
                         </figcaption>
                     </figure>
                 </header>

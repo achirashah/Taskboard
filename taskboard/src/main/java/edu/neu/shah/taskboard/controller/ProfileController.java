@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.neu.shah.taskboard.dao.EmployeeDao;
 import edu.neu.shah.taskboard.dao.TaskDao;
-import edu.neu.shah.taskboard.pojo.Employee;
+import edu.neu.shah.taskboard.dao.UserDao;
 import edu.neu.shah.taskboard.pojo.Task;
+import edu.neu.shah.taskboard.pojo.User;
 
 @Controller
 public class ProfileController {
@@ -21,20 +21,20 @@ public class ProfileController {
 	TaskDao taskDao;
 
 	@Autowired
-	EmployeeDao employeeDao;
+	UserDao userDao;
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String loadProfile(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("employee") == null) {
+		if (session.getAttribute("user") == null) {
 			return "redirect:login";
 		} else {
-			Employee employee = (Employee) session.getAttribute("employee");
+			User user = (User) session.getAttribute("user");
 
-			List<Task> allTasks = employeeDao.getTasksByEmployee(employee.getId());
-			List<Task> todoTasks = employeeDao.getTasksByCategory(allTasks, "todo");
-			List<Task> doingTasks = employeeDao.getTasksByCategory(allTasks, "doing");
-			List<Task> doneTasks = employeeDao.getTasksByCategory(allTasks, "done");
+			List<Task> allTasks = userDao.getTasksByUser(user.getId());
+			List<Task> todoTasks = userDao.getTasksByState(allTasks, "todo");
+			List<Task> doingTasks = userDao.getTasksByState(allTasks, "doing");
+			List<Task> doneTasks = userDao.getTasksByState(allTasks, "done");
 
 			int todoPercent = 0;
 			int doingPercent = 0;
@@ -62,7 +62,7 @@ public class ProfileController {
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 	public String updateProfile(HttpServletRequest request) {
 		Integer idTask = Integer.valueOf(request.getParameter("idTask"));
-		taskDao.changeCategory(idTask);
+		taskDao.changeState(idTask);
 		return "redirect:profile";
 	}
 

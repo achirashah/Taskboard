@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.neu.shah.taskboard.dao.CompanyDao;
-import edu.neu.shah.taskboard.dao.EmployeeDao;
 import edu.neu.shah.taskboard.dao.ProjectDao;
-import edu.neu.shah.taskboard.pojo.Employee;
+import edu.neu.shah.taskboard.dao.UserDao;
 import edu.neu.shah.taskboard.pojo.Project;
 import edu.neu.shah.taskboard.pojo.Task;
+import edu.neu.shah.taskboard.pojo.User;
 
 @Controller
 public class ProjectController {
@@ -24,7 +24,7 @@ public class ProjectController {
 	ProjectDao projectDao;
 
 	@Autowired
-	EmployeeDao employeeDao;
+	UserDao userDao;
 
 	@Autowired
 	CompanyDao companyDao;
@@ -32,19 +32,19 @@ public class ProjectController {
 	@RequestMapping(value = "/project", method = RequestMethod.POST)
 	public String loadProject(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("employee") == null) {
+		if (session.getAttribute("user") == null) {
 			return "redirect:login";
 		} else {
-			Employee employee = (Employee) session.getAttribute("employee");
+			User user = (User) session.getAttribute("user");
 
 			Integer idProject = Integer.parseInt(request.getParameter("idProject"));
-			Project project = projectDao.getProjectForEmployee(idProject, employee.getCompany().getId());
+			Project project = projectDao.getProjectForUser(idProject, user.getCompany().getId());
 			request.setAttribute("project", project);
 
 			List<Task> allTasks = projectDao.getAllTasks(idProject);
-			List<Task> todoTasks = projectDao.getTasksByCategory(allTasks, "todo");
-			List<Task> doingTasks = projectDao.getTasksByCategory(allTasks, "doing");
-			List<Task> doneTasks = projectDao.getTasksByCategory(allTasks, "done");
+			List<Task> todoTasks = projectDao.getTasksByState(allTasks, "todo");
+			List<Task> doingTasks = projectDao.getTasksByState(allTasks, "doing");
+			List<Task> doneTasks = projectDao.getTasksByState(allTasks, "done");
 
 			request.setAttribute("allTasks", allTasks);
 			request.setAttribute("todoTasks", todoTasks);

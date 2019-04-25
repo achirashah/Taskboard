@@ -14,25 +14,25 @@
 <body>
     <div class="container">
 	        <h2 class="text-center">Register</h2>
-	        <form:form modelAttribute="employee" method="post">
+	        <form:form modelAttribute="user" method="post">
 	            <main class="row">
 	                <div class="col-sm-6">
 	                    <div class="row">
 	                        <div class="col-xs-2"></div>
 	                        <div class="col-xs-8">
 	                            <div class="form-group">
-	                                <label for="name">Name:</label>
-	                                <input class="form-control" id="name" placeholder="Name" name="name" minlength="3"
+	                                <label for="firstName">FirstName:</label>
+	                                <input class="form-control" id="firstName" placeholder="firstName" name="firstName" minlength="3"
 	                                       maxlength="15" required>
 	                            </div>
 	                            <div class="form-group">
-	                                <label for="surname">Surname:</label>
-	                                <input class="form-control" id="surname" placeholder="Surname" name="surname"
+	                                <label for="lastName">LastName:</label>
+	                                <input class="form-control" id="lastName" placeholder="lastName" name="lastName"
 	                                       minlength="3" maxlength="20" required>
 	                            </div>
 	                            <div class="form-group">
-	                                <label for="nick">Nick:</label>
-	                                <input class="form-control" id="nick" placeholder="Nick" name="nick" minlength="3"
+	                                <label for="userId">User ID:</label>
+	                                <input class="form-control" id="userId" placeholder="User ID" name="userId" minlength="3"
 	                                       maxlength="10" required>
 	                            </div>
 	                            <div class="form-group">
@@ -58,12 +58,12 @@
 	                </div>
                 <div class="col-sm-2">
                     <div class="row">
-                        <p><strong>Select your avatar:</strong></p>
+                        <p><strong>Select icon:</strong></p>
                         <c:forEach var = "i" begin = "1" end = "10">
                             <div class="radio" style="display: inline;">
                                 <label>
-                                    <input type="radio" id="avatar" name="avatar" value="${i}.png" required>
-                                    <img src="../../img/${i}.png" alt="Avatar" style="width: 50px; padding: 5% 2%;">
+                                    <input type="radio" id="icon" name="icon" value="${i}.png" required>
+                                    <img src="../../img/${i}.png" alt="icon" style="width: 50px; padding: 5% 2%;">
                                 </label>
                             </div>
                         </c:forEach>

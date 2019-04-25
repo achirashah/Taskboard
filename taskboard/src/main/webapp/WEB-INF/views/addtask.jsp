@@ -11,20 +11,20 @@
     <script src="../../js/bootstrap.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <p class="navbar-text navbar-left">
-                Taskboard
-            </p>
-            <ul class="nav navbar-nav navbar-left">
-                <li><a href="company">Company</a></li>
-                <li><a href="profile">Profile</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="logout">Log out</a></li>
-            </ul>
-        </div>
-    </nav>
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<p class="navbar-text navbar-left">Taskboard</p>
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="company">Company</a></li>
+				<li><a href="profile">Profile</a></li>
+				<li><a href="review">Review</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>${sessionScope.user.firstName} ${sessionScope.user.lastName}</a></li> 
+				<li><a href="logout">Log out</a></li>
+			</ul>
+		</div>
+	</nav>
     <main>
         <article class="container">
             <header class="row">
@@ -43,34 +43,34 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4 text-center">
-                            <p><strong>Assign employee:</strong></p>
-                            <c:forEach items="${employees}" var="employee">
+                            <p><strong>Assign user:</strong></p>
+                            <c:forEach items="${users}" var="user">
                                 <div class="radio" style="padding: 2%; background-color: #f8f8f8">
                                     <label>
-                                        <input type="radio" id="email" name="email" value="${employee.getEmail()}" required>
-                                            ${employee.getName()} ${employee.getSurname()}
+                                        <input type="radio" id="email" name="email" value="${user.getEmail()}" required>
+                                            ${user.getFirstName()} ${user.getLastName()}
                                     </label>
                                 </div>
                             </c:forEach>
                         </div>
                         <div class="col-sm-4 text-center">
-                            <p><strong>Select category:</strong></p>
+                            <p><strong>Select state:</strong></p>
                             <div class="form-group">
                                 <div class="radio yellow-note" style="padding: 2%;">
                                     <label>
-                                        <input type="radio" name="category" value="todo" required>
+                                        <input type="radio" name="state" value="todo" required>
                                         To do
                                     </label>
                                 </div>
                                 <div class="radio green-note" style="padding: 2%;">
                                     <label>
-                                        <input type="radio" name="category" value="doing" required>
+                                        <input type="radio" name="state" value="doing" required>
                                         Doing
                                     </label>
                                 </div>
                                 <div class="radio blue-note" style="padding: 2%;">
                                     <label>
-                                        <input type="radio" name="category" value="done" required>
+                                        <input type="radio" name="state" value="done" required>
                                         Done
                                     </label>
                                 </div>

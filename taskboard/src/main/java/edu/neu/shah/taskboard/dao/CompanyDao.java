@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.neu.shah.taskboard.pojo.Company;
-import edu.neu.shah.taskboard.pojo.Employee;
 import edu.neu.shah.taskboard.pojo.Project;
+import edu.neu.shah.taskboard.pojo.User;
 
 @Repository
 @Transactional
@@ -30,8 +30,8 @@ public class CompanyDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Employee> getEmployees(final int companyId) {
-		return entityManager.createQuery("SELECT e from Employee e WHERE e.company.id = :companyId")
+	public List<User> getUsers(final int companyId) {
+		return entityManager.createQuery("SELECT e from User e WHERE e.company.id = :companyId")
 				.setParameter("companyId", companyId).getResultList();
 	}
 

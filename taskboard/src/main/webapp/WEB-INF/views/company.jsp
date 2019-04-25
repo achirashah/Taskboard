@@ -19,9 +19,10 @@
 			<ul class="nav navbar-nav navbar-left">
 				<li class="active"><a href="company">Company</a></li>
 				<li><a href="profile">Profile</a></li>
-                <li><a href="review">Review</a></li>
+				<li><a href="review">Review</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+				<li><a>${sessionScope.user.firstName} ${sessionScope.user.lastName}</a></li> 
 				<li><a href="logout">Log out</a></li>
 			</ul>
 		</div>
@@ -35,18 +36,18 @@
 		</header>
 		<section class="row">
 			<div class="col-xs-12">
-				<c:forEach items="${employees}" var="employee">
+				<c:forEach items="${users}" var="user">
 					<figure style="display: inline-block;">
-						<img src="../../img/${employee.getAvatar()}" alt="Avatar"
+						<img src="../../img/${user.getIcon()}" alt="Icon"
 							style="margin: 10px; width: 150px;">
 						<figcaption>
 							<c:choose>
 								<c:when
-									test="${employee.getName().length() + employee.getName().length() < 20}">
-                                        ${employee.getName()} ${employee.getSurname()}
+									test="${user.getFirstName().length() + user.getLastName().length() < 20}">
+                                        ${user.getFirstName()} ${user.getLastName()}
                                     </c:when>
 								<c:otherwise>
-                                        ${employee.getName().charAt(0)}. ${employee.getSurname()}
+                                        ${user.getFirstName().charAt(0)}. ${user.getLastName()}
                                     </c:otherwise>
 							</c:choose>
 						</figcaption>
@@ -80,7 +81,7 @@
 								</td>
 								<td>${project.getName()}</td>
 								<td>${project.getDescription()}</td>
-								<td>${project.getListOfTasks().size()}</td>
+								<td>${project.getTasks().size()}</td>
 								<td>
 									<form method="post" action="project">
 										<input type="hidden" id="idProject" name="idProject"

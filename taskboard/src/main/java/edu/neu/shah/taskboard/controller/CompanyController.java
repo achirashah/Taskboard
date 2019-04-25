@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.neu.shah.taskboard.dao.CompanyDao;
-import edu.neu.shah.taskboard.dao.EmployeeDao;
 import edu.neu.shah.taskboard.dao.ProjectDao;
-import edu.neu.shah.taskboard.pojo.Employee;
+import edu.neu.shah.taskboard.dao.UserDao;
 import edu.neu.shah.taskboard.pojo.Project;
+import edu.neu.shah.taskboard.pojo.User;
 
 @Controller
 public class CompanyController {
@@ -23,7 +23,7 @@ public class CompanyController {
 	ProjectDao projectDao;
 
 	@Autowired
-	EmployeeDao employeeDao;
+	UserDao userDao;
 
 	@Autowired
 	CompanyDao companyDao;
@@ -31,15 +31,15 @@ public class CompanyController {
 	@RequestMapping(value = "/company", method = RequestMethod.GET)
 	public String loadCompany(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("employee") == null) {
+		if (session.getAttribute("user") == null) {
 			return "redirect:login";
 		} else {
-			Employee employee = (Employee) session.getAttribute("employee");
+			User user = (User) session.getAttribute("user");
 
-			List<Employee> employees = companyDao.getEmployees(employee.getCompany().getId());
-			List<Project> projects = companyDao.getProjects(employee.getCompany().getId());
+			List<User> users = companyDao.getUsers(user.getCompany().getId());
+			List<Project> projects = companyDao.getProjects(user.getCompany().getId());
 
-			request.setAttribute("employees", employees);
+			request.setAttribute("users", users);
 			request.setAttribute("projects", projects);
 
 			return "company";
@@ -49,7 +49,7 @@ public class CompanyController {
 	@RequestMapping(value = "/company", method = RequestMethod.POST)
 	public String updateCompany(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		Employee employee = (Employee) session.getAttribute("employee");
+		User user = (User) session.getAttribute("user");
 		Integer idProject = Integer.parseInt(request.getParameter("idProject"));
 		if (idProject == 0) {
 			String name = request.getParameter("name");
@@ -57,7 +57,7 @@ public class CompanyController {
 			Project project = new Project();
 			project.setName(name);
 			project.setDescription(description);
-			project.setCompany(employee.getCompany());
+			project.setCompany(user.getCompany());
 			if (projectDao.insertProject(project)) {
 				System.out.println("Inserted project!!");
 				return "redirect:company";
@@ -66,7 +66,7 @@ public class CompanyController {
 				return "company";
 			}
 		} else {
-			Project project = projectDao.getProjectForEmployee(idProject, employee.getCompany().getId());
+			Project project = projectDao.getProjectForUser(idProject, user.getCompany().getId());
 			if (project == null) {
 				request.setAttribute("infoProject", "The project was deleted before.");
 				return "company";

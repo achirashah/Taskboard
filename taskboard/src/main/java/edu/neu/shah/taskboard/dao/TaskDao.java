@@ -17,6 +17,9 @@ public class TaskDao {
 	public boolean insertTask(Task task) {
 		try {
 			entityManager.persist(task);
+			task.getProject().addTask(task);
+			task.getUser().addTask(task);
+			task.getProject().addUser(task.getUser());
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -30,21 +33,21 @@ public class TaskDao {
 	}
 
 	@Transactional
-	public void changeCategory(Integer taskId) {
+	public void changeState(Integer taskId) {
 		Task task = this.getTaskById(taskId);
 		int changedTasks = -1;
-		switch (task.getCategory()) {
+		switch (task.getState()) {
 		case "todo":
-			changedTasks = entityManager.createQuery("UPDATE Task t SET t.category = 'doing' WHERE t.id = :id")
+			changedTasks = entityManager.createQuery("UPDATE Task t SET t.state = 'doing' WHERE t.id = :id")
 					.setParameter("id", taskId).executeUpdate();
 			break;
 		case "doing":
-			changedTasks = entityManager.createQuery("UPDATE Task t SET t.category = 'done' WHERE t.id = :id")
+			changedTasks = entityManager.createQuery("UPDATE Task t SET t.state = 'done' WHERE t.id = :id")
 					.setParameter("id", taskId).executeUpdate();
 			break;
 		case "done":
-			changedTasks = entityManager.createQuery("DELETE FROM Task t WHERE t.id = :id").setParameter("id", taskId)
-					.executeUpdate();
+			changedTasks = entityManager.createQuery("UPDATE Task t SET t.state = 'closed' WHERE t.id = :id")
+					.setParameter("id", taskId).executeUpdate();
 			break;
 		default:
 			System.out.println("Task should not have been listed!!");

@@ -1,13 +1,17 @@
 package edu.neu.shah.taskboard.pojo;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -28,15 +32,25 @@ public class Project {
 	@Column(nullable = false, length = 150)
 	private String description;
 
-	@ManyToMany
-	private List<Employee> listOfEmployees;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	@JoinTable(name = "project_user", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> users = new HashSet<>();
 
-	@OneToMany(mappedBy = "project", orphanRemoval = true)
-	private List<Task> listOfTasks;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", orphanRemoval = true)
+	private Set<Task> tasks = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "companies_id")
 	private Company company;
+
+	public void addUser(User user) {
+		this.users.add(user);
+	}
+
+	public void addTask(Task task) {
+		this.tasks.add(task);
+	}
 
 	public Integer getId() {
 		return id;
@@ -62,20 +76,20 @@ public class Project {
 		this.description = description;
 	}
 
-	public List<Employee> getListOfEmployees() {
-		return listOfEmployees;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setListOfEmployees(List<Employee> listOfEmployees) {
-		this.listOfEmployees = listOfEmployees;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
-	public List<Task> getListOfTasks() {
-		return listOfTasks;
+	public Set<Task> getTasks() {
+		return tasks;
 	}
 
-	public void setListOfTasks(List<Task> listOfTasks) {
-		this.listOfTasks = listOfTasks;
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	public Company getCompany() {
@@ -95,10 +109,10 @@ public class Project {
 		builder.append(name);
 		builder.append(", description=");
 		builder.append(description);
-		builder.append(", listOfEmployees=");
-		builder.append(listOfEmployees);
-		builder.append(", listOfTasks=");
-		builder.append(listOfTasks);
+		builder.append(", users=");
+		builder.append(users.size());
+		builder.append(", tasks=");
+		builder.append(tasks.size());
 		builder.append(", company=");
 		builder.append(company);
 		builder.append("]");
