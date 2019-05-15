@@ -1,0 +1,142 @@
+body {
+    background-color: lightblue;
+    height: 100%
+}
+
+.col-xs-12,
+.col-md-3,
+.col-md-9 {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.col-xs-12 figure img,
+.col-md-3 figure img {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.navbar-text, h3, h4 {
+    cursor: default;
+}
+
+h2 {
+    cursor: default;
+}
+
+.row {
+    padding: 10px;
+}
+
+.progress {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 70%;
+}
+
+.btn {
+    margin-left: 4%;
+    margin-right: 4%;
+}
+/* #footer{ */
+/* 	  bottom: 20px; */
+/* 	  height: 50px; */
+/* 	  left: 0; */
+/* 	  right: 0; */
+/* } */
+
+.media {
+    max-width: 17%;
+    min-height: 160px;
+    padding: 1%;
+    margin: 1%;
+    display: inline-block;
+    transform: rotate(2deg);
+    -webkit-box-shadow: 5px 5px 15px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 15px 0 rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 15px 0 rgba(0,0,0,0.75);
+}
+
+.media-heading {
+    display: block;
+}
+
+.media-heading a {
+    text-decoration: underline;
+    color: #000000;
+}
+
+.media img {
+    height: 36px;
+    width: 36px;
+    cursor: default;
+}
+
+.table {
+    background-color: #f8f8f8;
+}
+
+.table tr:first-child th {
+    text-align: center;
+    cursor: default;
+}
+
+.table tr td a {
+    display: block;
+}
+
+.table tr td a:hover {
+    cursor: pointer;
+}
+
+.yellow-note {
+    background-color: #f2b968;
+}
+
+.green-note {
+    background-color: #74c374;
+}
+
+.blue-note {
+    background-color: #73c9e3;
+}
+
+.neat {
+    min-height: 175px
+}
+
+.margin-footer {
+    margin-top: 2%;
+}
+
+@media (min-width: 767px) and (max-width: 991px) {
+    .col-xs-12 figure img{
+        width: 50%;
+    }
+
+    .media {
+        max-width: 30%;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-text,
+    .navbar-header,
+    .navbar-nav {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .col-xs-12 figure img{
+        width: 60%;
+    }
+
+    .media {
+        max-width: 45%;
+    }
+}
